@@ -1,7 +1,7 @@
 /*!
  * 爆速JSONP-v1 - JSONP WebAPIを手軽に使うためのフレームワーク
  * @copyright Yahoo Japan Corporation
- * @license https://github/ydnjp/bakusoku-jsonp/LICENSE.md
+ * @license https://github.com/ydnjp/bakusoku-jsonp/blob/master/LICENSE
  *
  * Includes mustache.js
  * https://github.com/janl/mustache.js
