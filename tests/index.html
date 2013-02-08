@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+ <meta charset="UTF-8">
+ <title>爆速JSONP Test</title>
+ <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.10.0.css">
+ <script src="../vendor/mustache.js/mustache.js"></script>
+</head>
+<body>
+ <div id="qunit"></div>
+ <div id="sample">
+<h2>simple case</h2>
+<script src="/src/bakusoku-jsonp.js"
+  data-url="api.php"
+  data-p-type="simple1">
+<div id="case1">{{result}}</div>
+</script>
+
+<h2>simple case 2</h2>
+<script src="/src/bakusoku-jsonp.js"
+  data-url="api.php"
+  data-p-type="simple2">
+<div id="case2">{{result}}</div>
+</script>
+
+<h2>data filtering</h2>
+<script>
+function filterSample(data) {
+    data.another = 'another data';
+    return data;
+}
+</script>
+<script src="/src/bakusoku-jsonp.js"
+  data-url="api.php"
+  data-filter="filterSample"
+  data-p-type="simple1">
+<div id="case3">{{result}}+{{another}}</div>
+</script>
+
+<h2>data filtering (namespaced function)</h2>
+<script>
+var some = {};
+some.example = {};
+some.example.filter = function(data) {
+    data.another = 'another data 2';
+    return data;
+};
+some[1] = {};
+some[1].filter = function(data) {
+    data.another = 'another data 3';
+    return data;
+};
+</script>
+<script src="/src/bakusoku-jsonp.js"
+  data-url="api.php"
+  data-filter="some.example.filter"
+  data-p-type="simple1">
+<div id="case4a">{{result}}+{{another}}</div>
+</script>
+<script src="/src/bakusoku-jsonp.js"
+  data-url="api.php"
+  data-filter="some.1.filter"
+  data-p-type="simple1">
+<div id="case4b">{{result}}+{{another}}</div>
+</script>
+
+<h2>Timeout handling</h2>
+<script src="/src/bakusoku-jsonp.js"
+  data-url="api.php"
+  data-timeout="1"
+  data-p-type="waitAndSimple2">
+{{#BakusokuError}}
+<div id="case6">Timeout!!</div>
+{{/BakusokuError}}
+{{^BakusokuError}}
+<div id="case6">{{result}}</div>
+{{/BakusokuError}}
+</script>
+
+ </div>
+ <script src="http://code.jquery.com/qunit/qunit-1.10.0.js"></script>
+ <script src="mainTest.js"></script>
+</body>
+</html>
