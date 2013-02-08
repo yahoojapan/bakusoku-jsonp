@@ -8,7 +8,7 @@ JSONPのWeb APIを手軽に使うためのフレームワークです。JavaScri
 
 ## Example
 
-HTMLに以下のようなscriptタグを書いておくと、自動的にdata-XXXで設定されたWeb APIにリクエストし、その結果でHTMLを作り出力します。
+HTMLに以下のようなscriptタグを書いておくと、自動的にdata-XXXで設定されたWeb API(JSONP形式に対応したもの)にリクエストし、その結果でHTMLを作り出力します。
 
 ```html
 <script src="path/to/bakusoku-jsonp-v1.js"
@@ -24,7 +24,7 @@ Hello {{response}}!!
 HTTP/1.1 200 OK
 Content-Type: application/json
 
-{"response":"Hello WebAPI!!"}
+{"response":"WebAPI"}
 ```
 
 ↓ 
@@ -36,4 +36,5 @@ Hello WebAPI!!
 ```
 
 ## License
+
 MITライセンスにて提供しています。詳しくはLICENSEをご覧ください。
