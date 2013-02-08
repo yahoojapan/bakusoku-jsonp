@@ -1,6 +1,6 @@
 MUSTACHE = vendor/mustache.js/mustache.js
 BAKUSOKU = src/bakusoku-jsonp.js
-MINIFYER = yuicompressor
+MINIFIER = yuicompressor
 
 SRC = $(MUSTACHE) $(BAKUSOKU)
 VERSION = 1
@@ -16,7 +16,7 @@ $(COMBINE): $(SRC)
 	cat $(BAKUSOKU) >> $@
 
 $(MINIFY): $(COMBINE)
-	$(MINIFYER) $< > $@
+	$(MINIFIER) $< > $@
 
 .PHONY: clean
 
