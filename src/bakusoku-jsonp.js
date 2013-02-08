@@ -16,6 +16,7 @@ void function(global, document) {
         var attrs = script.attributes
           , i, len, attr
           , filter, timeout
+          , cblabel
           , params = {}
         ;
 
@@ -42,8 +43,13 @@ void function(global, document) {
             timeout = attrs['data-timeout'].nodeValue;
         }
 
+        //cblabelを取得
+        if (attrs['data-callback-label']) {
+            cblabel = attrs['data-callback-label'].nodeValue;
+        }
+
         var request = function(){
-            requestJSONP(attrs['data-url'].nodeValue, params, timeout, function(data){
+            requestJSONP(attrs['data-url'].nodeValue, params, timeout, cblabel, function(data){
                 var box
                   , template
                   , credit = ''
@@ -77,6 +83,8 @@ void function(global, document) {
                     box = document.createElement('pre');
                     box.textContent = JSON.stringify(filter(data), null, "  ");
                 }
+                console.log(script);
+                console.log(script.parentNode);
                 script.parentNode.replaceChild(box, script);
             });
         };
@@ -115,11 +123,11 @@ void function(global, document) {
      * @param {string}  url      APIのURL(http://から?より前の部分まで)
      * @param {Object}  params   APIに渡すパラメータのハッシュ。buildQuery()を参照
      * @param {number}  timeout  ミリ秒。レスポンスが返ってこなければエラーとして打ち切る
-     * @param {function(Object)} callback JSONを処理するコールバック関数
      * @param {string}  cblabel  callbackを指定するパラメータ名。"callback="ではないAPIの場合、ここで変更を指定
+     * @param {function(Object)} callback JSONを処理するコールバック関数
      */
-    function requestJSONP(url, params, timeout, callback, cblabel) {
-        var callbackName = 'yj_callback' + (+new Date)
+    function requestJSONP(url, params, timeout, cblabel, callback) {
+        var callbackName = 'yj_callback' + Math.random().toString(36).slice(2,20)
           , req = document.createElement('script')
           , timerId
         ;
@@ -133,11 +141,12 @@ void function(global, document) {
         global[callbackName] = function(data) {
             clearTimeout(timerId);
             req.parentNode.removeChild(req);
-            global[callbackName] = null;
+            delete global[callbackName];
             return callback(data);
         };
 
         timerId = setTimeout(function(){
+            global[callbackName] = function(){};
             callback({BakusokuError:true});
         }, timeout);
 
