@@ -16,12 +16,9 @@ $(COMBINE): $(SRC)
 	cat $(BAKUSOKU) >> $@
 
 $(MINIFY): $(COMBINE)
-	$(MINIFIER) $< > $@
+	$(MINIFIER) $(COMBINE) > $@
 
 .PHONY: clean
 
 clean:
 	rm -f $(COMBINE) $(MINIFY)
-
-test:
-	php -S localhost:8080
