@@ -1,3 +1,10 @@
+## Announcement
+
+このプロジェクトは現在保守しておりません。今後のIssueやPull requestには対応できません。  
+これまでサポートいただいた皆さまに感謝申し上げます。ありがとうございました。
+  
+This project is no longer maintained. Further issue reports and/or pull requests will not be accepted. Thank you for your contribution to this project.
+  
 爆速JSONP
 =============================================
 http://techblog.yahoo.co.jp/programming/bakusoku-jsonp/
